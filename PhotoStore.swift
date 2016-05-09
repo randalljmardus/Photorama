@@ -6,9 +6,18 @@
 //  Copyright © 2016 Randall Mardus. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PhotoStore {
+    
+    enum ImageResult {
+        case Success(UIImage)
+        case Failure(ErrorType)
+    }
+    
+    enum PhotoError: ErrorType {
+        case ImageCreationError
+    }
     
     let session: NSURLSession = {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -32,5 +41,44 @@ class PhotoStore {
             return .Failure(error!)
         }
         return FlickrAPI.photosFromJSONData(jsonData)
+    }
+    
+    
+    func fetchImageForPhoto(photo: Photo, completion: (ImageResult) -> Void) {
+        
+        let photoURL = photo.remoteURL
+        let request = NSURLRequest(URL: photoURL)
+        
+        let task = session.dataTaskWithRequest(request) {
+        (data, response, error) -> Void in
+            
+            let result = self.processImageRequest(data: data, error: error)
+            
+            if case let .Success(image) = result {
+                photo.image = image
+            }
+            
+            completion(result)
+        
+        }
+        task.resume()
+    }
+    
+    func processImageRequest(data data: NSData?, error: NSError?) -> ImageResult {
+        
+        guard let
+            imageData = data,
+            image = UIImage(data: imageData) else {
+                
+                //Couldn't create an image
+                if data == nil {
+                    return .Failure(error!)
+                }
+                else {
+                    return .Failure(PhotoError.ImageCreationError)
+                }
+        }
+        
+        return .Success(image)
     }
 }
