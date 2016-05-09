@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Photorama-->
@@ -27,15 +28,31 @@
                                     <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UICollectionViewCell" id="K2Y-EA-8ZH">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UICollectionViewCell" id="K2Y-EA-8ZH" customClass="PhotoCollectionViewCell" customModule="Photorama" customModuleProvider="target">
                                         <rect key="frame" x="2" y="66" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qTa-BQ-3G3">
+                                                    <rect key="frame" x="-35" y="-8" width="240" height="128"/>
+                                                </imageView>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Wle-Md-nm9">
+                                                    <rect key="frame" x="40" y="40" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="qTa-BQ-3G3" firstAttribute="leading" secondItem="K2Y-EA-8ZH" secondAttribute="leadingMargin" constant="-43" id="8dX-ve-6FL"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="qTa-BQ-3G3" secondAttribute="trailing" constant="-123" id="SSb-61-i0y"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="qTa-BQ-3G3" id="gVg-KS-S0p"/>
+                                            <outlet property="spinner" destination="Wle-Md-nm9" id="4hr-wB-31v"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
