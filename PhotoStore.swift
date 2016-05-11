@@ -92,7 +92,6 @@ class PhotoStore {
             }
             
             completion(result)
-        
         }
         task.resume()
     }
